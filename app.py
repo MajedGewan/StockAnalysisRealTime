@@ -145,9 +145,9 @@ def update_graph(num, open_input, high_input, low_input, close_input, dataset_in
         columns.append('Close')
 
     if close > last_close:
-        color = {'color':'red'}
-    else:
         color = {'color':'green'}
+    else:
+        color = {'color':'red'}
 
     fig = go.Figure(data=go.Ohlc(x=df['Date'],
                     open=df['Open'],
