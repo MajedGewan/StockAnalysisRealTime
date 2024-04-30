@@ -62,7 +62,7 @@ app.layout = dbc.Container(
                                     multi=False,
                                     id='dataset-input'
                                 ),
-            md=2),
+            md=2, align='center'),
             dbc.Col(
                 html.H1("None", className='text-center', id='ticker-name')
             ,md=10),
