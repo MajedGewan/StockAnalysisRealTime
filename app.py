@@ -32,36 +32,7 @@ row1 = dbc.Row(
     ])
 row2 = dbc.Row(
     [        
-        dbc.Col(
-            [
-                dbc.Row(
-                        [
-                            dbc.Col([
-                                dbc.Checkbox(label="Open",
-                                value=False,
-                                id="open-input",)
-                            ]),
-                            dbc.Col([
-                                dbc.Checkbox(label="High",
-                                value=False,
-                                id="high-input",)
-                            ]),
-                            dbc.Col([
-                                dbc.Checkbox(label="Low",
-                                value=False,
-                                id="low-input",)
-                            ]),
-                            dbc.Col([
-                                dbc.Checkbox(label="Close",
-                                value=True,
-                                id="close-input",)
-                            ]), 
-
-                        ]
-                ),
-        ], md=4),
-        dbc.Col(
-            html.Div([
+        html.Div([
                 dcc.Interval(
                         id='my_interval',
                         disabled=False,     #if True, the counter will no longer update
@@ -72,7 +43,7 @@ row2 = dbc.Row(
                                             #and if 0 then the interval stops running.
                 ),
                 dcc.Graph(id="ohlc")
-                ]),md=8)
+                ])
                 
         
     ]
@@ -80,8 +51,6 @@ row2 = dbc.Row(
 
 app.layout = dbc.Container(
     [
-        dbc.Row(html.H1("Stock Market Analysis", className='text-center')), 
-        html.Hr(),
         dbc.Row(
             [
                 dbc.Col(
@@ -117,13 +86,9 @@ app.layout = dbc.Container(
      Output('low', 'figure'),
      Output('close', 'figure')],
     [Input('my_interval', 'n_intervals'),
-     Input('open-input', 'value'),
-     Input('high-input', 'value'),
-     Input('low-input', 'value'),
-     Input('close-input', 'value'),
      Input('dataset-input', 'value'),]
 )
-def update_graph(num, open_input, high_input, low_input, close_input, dataset_input):
+def update_graph(num, dataset_input):
     """update every 3 seconds"""
     if dataset_input is None:
         raise PreventUpdate
@@ -134,15 +99,6 @@ def update_graph(num, open_input, high_input, low_input, close_input, dataset_in
     open = df.Open.iloc[0]
     last_close = finance.previous_close
     close = df.Close.iloc[-1]
-    columns = []
-    if open_input:
-        columns.append('Open')
-    if high_input:
-        columns.append('High')
-    if low_input:
-        columns.append('Low')
-    if close_input:
-        columns.append('Close')
 
     if close > last_close:
         color = {'color':'green'}
@@ -230,7 +186,4 @@ def update_graph(num, open_input, high_input, low_input, close_input, dataset_in
     return(finance.symbol, color,fig, fig_price, fig_open, fig_high, fig_low, fig_close)
 
 
-
-#if __name__ == '__main__':
-#    app.run_server(debug=True)
 
