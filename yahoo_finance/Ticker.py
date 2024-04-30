@@ -1,4 +1,4 @@
-from ..yahoo_finance import connection_data_helper
+from . import connection_data_helper
 class Ticker:
     def __init__(self, symbol, interval, period ) -> None:
         self.url = "https://query1.finance.yahoo.com/v8/finance/chart/"
