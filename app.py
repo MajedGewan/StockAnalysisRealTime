@@ -65,7 +65,7 @@ app.layout = dbc.Container(
             md=2, align='center'),
             dbc.Col(
                 html.H1("None", className='text-center', id='ticker-name')
-            ,md=10),
+            ,md=8),
             ]
         ), 
         html.Hr(),
