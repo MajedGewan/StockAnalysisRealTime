@@ -75,7 +75,7 @@ row2 = dbc.Row(
                         disabled=False,     #if True, the counter will no longer update
                         interval=1*3000,    #increment the counter n_intervals every interval milliseconds
                         n_intervals=0,      #number of times the interval has passed
-                        max_intervals=1000,    #number of times the interval will be fired.
+                        #max_intervals=1000,    #number of times the interval will be fired.
                                             #if -1, then the interval has no limit (the default)
                                             #and if 0 then the interval stops running.
                 ),
