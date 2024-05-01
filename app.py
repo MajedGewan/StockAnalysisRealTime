@@ -60,7 +60,8 @@ app.layout = dbc.Container(
                                     ],
                                     value=datasets[0],
                                     multi=False,
-                                    id='dataset-input'
+                                    id='dataset-input',
+                                    style={'color':'rgb(48,48,48)'}
                                 ),
             md=2, align='center'),
             dbc.Col(

@@ -10,7 +10,7 @@ def get_row(data):
     l[0] = time
     return l
 
-datasets = ['META','SALIK.AE', 'TSLA', 'JPY=X']
+datasets = ['JPY=X', 'SALIK.AE', 'TSLA','META']
 def get_data(dataset_input):
     finance = Ticker(dataset_input, interval='1m', period='1d')
     finance.data['Prev High'] = finance.data['High'].shift(1)
