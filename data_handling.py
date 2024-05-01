@@ -19,7 +19,6 @@ def get_data(dataset_input):
     finance.data.loc[0, 'Prev Low'] = finance.data.loc[0,'Low']
     finance.data['Prev Close'] = finance.data['Close'].shift(1)
     finance.data.loc[0, 'Prev Close'] = finance.data.loc[0,'Close']
-    print(finance.data)
     
     return finance 
 

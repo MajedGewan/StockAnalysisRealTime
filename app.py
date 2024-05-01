@@ -127,9 +127,9 @@ def update_graph(num, dataset_input):
         currency = finance.currency
 
         if close > last_close:
-            color = {'color':'green'}
+            color = {'color':'#3D9970'}
         else:
-            color = {'color':'red'}
+            color = {'color':'#FF4136'}
 
         fig = go.Figure(data=go.Ohlc(x=df['Date'],
                         open=df['Open'],
@@ -212,6 +212,4 @@ def update_graph(num, dataset_input):
         raise PreventUpdate
     
     return(finance.symbol, color, currency, timezone, fig, fig_price, fig_open, fig_high, fig_low, fig_close)
-
-
 
