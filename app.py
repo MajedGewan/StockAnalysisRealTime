@@ -166,7 +166,7 @@ def update_graph(num, dataset_input):
                 'title': {'text': "Price"},
                 'mode' : "number+delta",
                 'number' : {'valueformat':'.3f'},
-                'delta' : {'reference': last_close, 'valueformat':'.3f','suffix': f" ({(close-last_close)/last_close:.3%}) {finance.currency}"}}]
+                'delta' : {'reference': last_close, 'valueformat':'.3f','suffix': f" ({(close-last_close)/last_close:.3%})"}}]
                                 }})
 
         fig_open = go.Figure()
