@@ -61,8 +61,8 @@ def get_high_low_close(meta, numerical_data, interval):
         low = meta['regularMarketDayLow']
     else:
         previous_close = meta['chartPreviousClose']
-        high = max(numerical_data['high'])
-        low = min(numerical_data['low'])
+        high = max(list(filter(lambda item: item is not None, numerical_data['high'])))
+        low = max(list(filter(lambda item: item is not None, numerical_data['low'])))
     return high, low, previous_close
 
 
