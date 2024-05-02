@@ -85,12 +85,37 @@ row2 = dbc.Row(
         
     ]
 )
+row1_v2 = dbc.Row(
+    [
+        dbc.Col([
+            dbc.Row(
+                dcc.Graph(id='close')
+            ),
+            dbc.Row(
+                dcc.Graph(id='open')
+            )
+        ]
+        , md=4),
+        dbc.Col(
+            dcc.Graph(id="price"),
+            md=4
+        ),
+        dbc.Col([
+            dbc.Row(
+                dcc.Graph(id='high')
+            ),
+            dbc.Row(
+                dcc.Graph(id='low')
+            )
+        ]
+        , md=4)
+    ])
 
 app.layout = dbc.Container(
     [
         row0,
         html.Hr(),
-        row1,
+        row1_v2,
         html.Hr(),
         row2,
     ],
@@ -146,11 +171,11 @@ def update_graph(num, dataset_input):
             value = last_close,
             domain = {'row': 0, 'column': 1}))
         fig_close.update_layout(
-            height=300,
+            height=150,
             template = {'data' : {'indicator': [{
-                'title': {'text': "Last Close"},
+                'title': {'text': "Last Close",'font.size':20},
                 'mode' : "number",
-                'number' : {'valueformat':'.3f'}},
+                'number' : {'valueformat':'.3f','font.size':25}},
                 ]
                                 }})
         
@@ -175,11 +200,11 @@ def update_graph(num, dataset_input):
             value = open,
             domain = {'row': 0, 'column': 1}))
         fig_open.update_layout(
-            height=300,
+            height=150,
             template = {'data' : {'indicator': [{
-                'title': {'text': "Open"},
+                'title': {'text': "Open",'font.size':20},
                 'mode' : "number+delta",
-                'number' : {'valueformat':'.3f'},}]
+                'number' : {'valueformat':'.3f','font.size':25},}]
                                 }})
 
         fig_high = go.Figure()
@@ -188,11 +213,11 @@ def update_graph(num, dataset_input):
             value = high,
             domain = {'row': 0, 'column': 1}))
         fig_high.update_layout(
-            height=300,
+            height=150,
             template = {'data' : {'indicator': [{
-                'title': {'text': "High"},
+                'title': {'text': "High",'font.size':20},
                 'mode' : "number+delta",
-                'number' : {'valueformat':'.3f'}}]
+                'number' : {'valueformat':'.3f','font.size':25}}]
                                 }})
 
 
@@ -202,11 +227,11 @@ def update_graph(num, dataset_input):
             value = low,
             domain = {'row': 0, 'column': 1}))
         fig_low.update_layout(
-            height=300,
+            height=150,
             template = {'data' : {'indicator': [{
-                'title': {'text': "Low"},
+                'title': {'text': "Low",'font.size':20},
                 'mode' : "number+delta",
-                'number' : {'valueformat':'.3f'}}]
+                'number' : {'valueformat':'.3f','font.size':25}}]
                                 }})
     except:
         raise PreventUpdate
