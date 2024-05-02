@@ -31,9 +31,9 @@ def get_data(url, symbol, interval, period):
      chart_data, currency, regular_market_time, timezone, previous_close, day_high, day_low = None, None, None, None, None, None, None
      data, error = get_raw_data(url, symbol, interval, period)
      if error is None:
-          chart_data, currency, regular_market_time, timezone, previous_close, day_high, day_low = process_data(data)
+          chart_data, currency, regular_market_time, timezone, previous_close, day_high, day_low = process_data(data, interval)
      return error, chart_data, currency, regular_market_time, timezone, previous_close, day_high, day_low
-def process_data(data):
+def process_data(data,interval):
      result = data['chart']['result'][0]
      meta = result['meta']
      indicators = result['indicators']
@@ -42,7 +42,10 @@ def process_data(data):
      currency = meta['currency']
      regular_market_time = meta['regularMarketTime']
      timezone = meta['exchangeTimezoneName']
-     previous_close = meta['previousClose']
+     if interval == '1m':
+        previous_close = meta['previousClose']
+     else:
+          previous_close = meta['chartPreviousClose']
      day_high = meta['regularMarketDayHigh']
      day_low = meta['regularMarketDayLow']
      chart_data = pd.DataFrame({'Date':timestamp,

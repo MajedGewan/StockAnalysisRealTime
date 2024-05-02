@@ -1,0 +1,17 @@
+.date-button{
+    background-color: transparent;
+    color: white;
+    border: none;
+}
+
+.date-button:hover{
+    color: blue;
+}
+
+.clicked{
+    background-color: rgb(48, 48, 48);
+}
+
+.radio{
+    margin-left: 10px;
+}

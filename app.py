@@ -5,6 +5,8 @@ import dash_bootstrap_components as dbc
 import data_handling
 from dash_bootstrap_templates import load_figure_template
 from date_helper import timezone_to_offset
+from dash import ctx
+import plotly.express as px
 
 datasets = data_handling.get_datasets()
 
@@ -110,13 +112,33 @@ row1_v2 = dbc.Row(
         ]
         , md=4)
     ])
+row_button = dbc.Row(
+    [
+        dbc.Col(
+                html.Div(
+                            [
+                                dcc.RadioItems(['1D', '1M','1Y', '5Y'], '1D', inline=True, inputClassName='radio', id='date-input')
+                            ]
+                        ,className='text-center')
+            ,md=6),
+        dbc.Col(
+                html.Div(
+                            [
+                                dcc.RadioItems(['Line', 'OHLC'], 'OHLC', inline=True, inputClassName='radio', id='graph-input')
+                            ]
+                        ,className='text-center')
+            ,md=6),
 
+    ]
+    
+)
 app.layout = dbc.Container(
     [
         row0,
         html.Hr(),
         row1_v2,
         html.Hr(),
+        row_button,
         row2,
     ],
     fluid=True,
@@ -134,14 +156,16 @@ app.layout = dbc.Container(
      Output('low', 'figure'),
      Output('close', 'figure')],
     [Input('my_interval', 'n_intervals'),
-     Input('dataset-input', 'value'),]
+     Input('dataset-input', 'value'),
+     Input('date-input', 'value'),
+     Input('graph-input', 'value'),]
 )
-def update_graph(num, dataset_input):
+def update_graph(num, dataset_input, date_input, graph_input):
     """update every 3 seconds"""
     try:
         if dataset_input is None:
             raise PreventUpdate
-        finance = data_handling.get_data(dataset_input)
+        finance = data_handling.get_data(dataset_input, date_input)
         df = finance.data
         high = finance.day_high
         low = finance.day_low
@@ -156,12 +180,15 @@ def update_graph(num, dataset_input):
         else:
             color = {'color':'#FF4136'}
 
-        fig = go.Figure(data=go.Ohlc(x=df['Date'],
-                        open=df['Open'],
-                        high=df['High'],
-                        low=df['Low'],
-                        close=df['Close']))
-        
+        if graph_input == 'OHLC':
+            fig = go.Figure(data=go.Ohlc(x=df['Date'],
+                            open=df['Open'],
+                            high=df['High'],
+                            low=df['Low'],
+                            close=df['Close']))
+        else:
+            fig = px.line(x=df['Date'], y=df['Close'])
+            
         fig.update_layout(uirevision=dataset_input,
                         height=500)
         
@@ -237,4 +264,3 @@ def update_graph(num, dataset_input):
         raise PreventUpdate
     
     return(finance.symbol, color, currency, timezone, fig, fig_price, fig_open, fig_high, fig_low, fig_close)
-
