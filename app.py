@@ -117,14 +117,14 @@ row_button = dbc.Row(
         dbc.Col(
                 html.Div(
                             [
-                                dcc.RadioItems(['1D', '1M','1Y', '5Y'], '1D', inline=True, inputClassName='radio', id='date-input')
+                                dcc.RadioItems(['1D', '1M','1Y', '5Y'], '1D', inline=True, inputClassName='radio', id='date-input', className='group')
                             ]
                         ,className='text-center')
             ,md=6),
         dbc.Col(
                 html.Div(
                             [
-                                dcc.RadioItems(['Line', 'OHLC'], 'OHLC', inline=True, inputClassName='radio', id='graph-input')
+                                dcc.RadioItems(['Line', 'OHLC'], 'OHLC', inline=True, inputClassName='radio', id='graph-input', className='group')
                             ]
                         ,className='text-center')
             ,md=6),
@@ -264,3 +264,6 @@ def update_graph(num, dataset_input, date_input, graph_input):
         raise PreventUpdate
     
     return(finance.symbol, color, currency, timezone, fig, fig_price, fig_open, fig_high, fig_low, fig_close)
+
+if __name__ == '__main__':
+    app.run_server(debug=True)
