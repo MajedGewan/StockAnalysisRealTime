@@ -28,11 +28,11 @@ def get_raw_data(url, symbol, interval, period):
         return raw_data, error
 
 def get_data(url, symbol, interval, period):
-     chart_data, currency, regular_market_time, timezone, previous_close, day_high, day_low = None, None, None, None, None, None, None
+     chart_data, currency, regular_market_time, timezone, previous_close, high, low = None, None, None, None, None, None, None
      data, error = get_raw_data(url, symbol, interval, period)
      if error is None:
-          chart_data, currency, regular_market_time, timezone, previous_close, day_high, day_low = process_data(data, interval)
-     return error, chart_data, currency, regular_market_time, timezone, previous_close, day_high, day_low
+          chart_data, currency, regular_market_time, timezone, previous_close, high, low = process_data(data, interval)
+     return error, chart_data, currency, regular_market_time, timezone, previous_close, high, low
 def process_data(data,interval):
      result = data['chart']['result'][0]
      meta = result['meta']
@@ -42,12 +42,7 @@ def process_data(data,interval):
      currency = meta['currency']
      regular_market_time = meta['regularMarketTime']
      timezone = meta['exchangeTimezoneName']
-     if interval == '1m':
-        previous_close = meta['previousClose']
-     else:
-          previous_close = meta['chartPreviousClose']
-     day_high = meta['regularMarketDayHigh']
-     day_low = meta['regularMarketDayLow']
+     high, low, previous_close = get_high_low_close(meta, numerical_data, interval)
      chart_data = pd.DataFrame({'Date':timestamp,
                    'High':numerical_data['high'],
                    'Close':numerical_data['close'],
@@ -55,9 +50,20 @@ def process_data(data,interval):
                    'Low':numerical_data['low'],
                    'Open':numerical_data['open']})
      chart_data['Date'] = chart_data['Date'].apply(pd.Timestamp, unit='s', tz=timezone)
-     return chart_data, currency, regular_market_time, timezone, previous_close, day_high, day_low
+     return chart_data, currency, regular_market_time, timezone, previous_close, high, low
     
      
+def get_high_low_close(meta, numerical_data, interval):
+    previous_close, high, low = None, None, None
+    if interval == '1m':
+        previous_close = meta['previousClose']
+        high = meta['regularMarketDayHigh']
+        low = meta['regularMarketDayLow']
+    else:
+        previous_close = meta['chartPreviousClose']
+        high = max(numerical_data['high'])
+        low = min(numerical_data['low'])
+    return high, low, previous_close
 
 
      

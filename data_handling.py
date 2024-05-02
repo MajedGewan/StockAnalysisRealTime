@@ -23,12 +23,6 @@ def get_data(dataset_input, datet_type):
     else:
         raise Exception
     finance = Ticker(dataset_input, interval=interval, period=period)
-    finance.data['Prev High'] = finance.data['High'].shift(1)
-    finance.data.loc[0, 'Prev High'] = finance.data.loc[0,'High']
-    finance.data['Prev Low'] = finance.data['Low'].shift(1)
-    finance.data.loc[0, 'Prev Low'] = finance.data.loc[0,'Low']
-    finance.data['Prev Close'] = finance.data['Close'].shift(1)
-    finance.data.loc[0, 'Prev Close'] = finance.data.loc[0,'Close']
     
     return finance 
 

@@ -167,8 +167,8 @@ def update_graph(num, dataset_input, date_input, graph_input):
             raise PreventUpdate
         finance = data_handling.get_data(dataset_input, date_input)
         df = finance.data
-        high = finance.day_high
-        low = finance.day_low
+        high = finance.high
+        low = finance.low
         open = df.Open.iloc[0]
         last_close = finance.previous_close
         close = df.Close.iloc[-1]
@@ -264,6 +264,3 @@ def update_graph(num, dataset_input, date_input, graph_input):
         raise PreventUpdate
     
     return(finance.symbol, color, currency, timezone, fig, fig_price, fig_open, fig_high, fig_low, fig_close)
-
-if __name__ == '__main__':
-    app.run_server(debug=True)

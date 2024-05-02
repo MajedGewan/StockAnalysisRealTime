@@ -10,14 +10,14 @@ class Ticker:
         self.get_data()
 
     def get_data(self):
-        error, chart_data, currency, regular_market_time, timezone, previous_close, day_high, day_low = connection_data_helper.get_data(self.url, self.symbol, self.interval, self.period)
+        error, chart_data, currency, regular_market_time, timezone, previous_close, high, low = connection_data_helper.get_data(self.url, self.symbol, self.interval, self.period)
         self.error = error
         self.data = chart_data
         self.currency = currency
         self.regular_market_time = regular_market_time
         self.timezone = timezone
         self.previous_close = previous_close
-        self.day_high = day_high
-        self.day_low = day_low
+        self.high = high
+        self.low = low
     
         
