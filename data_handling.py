@@ -1,5 +1,4 @@
 from datetime import datetime
-import yfinance as yf
 import pandas as pd
 from yahoo_finance.Ticker import Ticker
 
@@ -10,7 +9,7 @@ def get_row(data):
     l[0] = time
     return l
 
-datasets = ['JPY=X', 'SALIK.AE', 'TSLA','META']
+datasets = pd.read_csv('./yahoo_finance/data_scrapping/data.csv')
 def get_data(dataset_input, datet_type):
     if datet_type == '1D':
         interval, period = '1m', '1d'
@@ -27,4 +26,4 @@ def get_data(dataset_input, datet_type):
     return finance 
 
 def get_datasets():
-    return datasets
+    return datasets[['Symbol','Name']].set_index('Symbol')

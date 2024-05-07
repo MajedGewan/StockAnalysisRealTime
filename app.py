@@ -18,9 +18,10 @@ row0 = dbc.Row(
                 dbc.Col(
                 dcc.Dropdown(
                                     options=[
-                                        {'label': dataset , 'value': dataset }for dataset in datasets
+                                        {'label': dataset , 'value': dataset }for dataset in datasets.index.values.tolist()
+                                        
                                     ],
-                                    value=datasets[0],
+                                    value=datasets.index.values.tolist()[0],
                                     multi=False,
                                     id='dataset-input',
                                     style={'color':'rgb(48,48,48)'}
@@ -81,7 +82,7 @@ row2 = dbc.Row(
                                             #if -1, then the interval has no limit (the default)
                                             #and if 0 then the interval stops running.
                 ),
-                dcc.Graph(id="ohlc")
+                dcc.Graph(id="ohlc", config= {'displaylogo': False})
                 ])
                 
         
@@ -91,23 +92,23 @@ row1_v2 = dbc.Row(
     [
         dbc.Col([
             dbc.Row(
-                dcc.Graph(id='close')
+                dcc.Graph(id='close', config= {'displaylogo': False})
             ),
             dbc.Row(
-                dcc.Graph(id='open')
+                dcc.Graph(id='open', config= {'displaylogo': False})
             )
         ]
         , md=4),
         dbc.Col(
-            dcc.Graph(id="price"),
+            dcc.Graph(id="price", config= {'displaylogo': False}),
             md=4
         ),
         dbc.Col([
             dbc.Row(
-                dcc.Graph(id='high')
+                dcc.Graph(id='high', config= {'displaylogo': False})
             ),
             dbc.Row(
-                dcc.Graph(id='low')
+                dcc.Graph(id='low', config= {'displaylogo': False})
             )
         ]
         , md=4)
@@ -263,4 +264,4 @@ def update_graph(num, dataset_input, date_input, graph_input):
     except:
         raise PreventUpdate
     
-    return(finance.symbol, color, currency, timezone, fig, fig_price, fig_open, fig_high, fig_low, fig_close)
+    return(datasets.loc[finance.symbol]['Name'], color, currency, timezone, fig, fig_price, fig_open, fig_high, fig_low, fig_close)
