@@ -19,5 +19,6 @@ class Ticker:
         self.previous_close = previous_close
         self.high = high
         self.low = low
-    
+
         
+    
